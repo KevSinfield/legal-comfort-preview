@@ -39,6 +39,30 @@
   });
   window.addEventListener('resize', function () { if (window.innerWidth > 980) setMenu(false); });
 
+  // Desktop dropdowns: hover/focus via CSS, plus click/tap and Escape via the toggle buttons
+  var subs = document.querySelectorAll('.has-sub');
+  function closeSubs(except) {
+    subs.forEach(function (li) {
+      if (li === except) return;
+      li.classList.remove('open');
+      var b = li.querySelector('.sub-toggle'); b && b.setAttribute('aria-expanded', 'false');
+    });
+  }
+  subs.forEach(function (li) {
+    var b = li.querySelector('.sub-toggle');
+    if (!b) return;
+    b.addEventListener('click', function () {
+      var open = !li.classList.contains('open');
+      closeSubs(li);
+      li.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', String(open));
+    });
+    li.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && li.classList.contains('open')) { closeSubs(); b.focus(); }
+    });
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.has-sub')) closeSubs(); });
+
   // Table of contents highlight (inner page)
   var tocLinks = document.querySelectorAll('.toc a');
   if (tocLinks.length && 'IntersectionObserver' in window) {
