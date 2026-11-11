@@ -37,7 +37,7 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && btn && btn.getAttribute('aria-expanded') === 'true') { setMenu(false); btn.focus(); }
   });
-  window.addEventListener('resize', function () { if (window.innerWidth > 980) setMenu(false); });
+  window.addEventListener('resize', function () { if (window.innerWidth > 1180) setMenu(false); });
 
   // Desktop dropdowns: hover/focus via CSS, plus click/tap and Escape via the toggle buttons
   var subs = document.querySelectorAll('.has-sub');
@@ -79,6 +79,12 @@
     Object.keys(map).forEach(function (id) { var el = document.getElementById(id); el && io.observe(el); });
   }
 
+  // Placeholder-style select: grey until a choice is made
+  document.querySelectorAll('form.enq select').forEach(function (sel) {
+    var sync = function () { sel.classList.toggle('empty', sel.value === ''); };
+    sel.addEventListener('change', sync); sync();
+  });
+
   // Demo enquiry form: validates locally, never submits anywhere.
   document.querySelectorAll('form.enq').forEach(function (form) {
     var done = form.parentElement.querySelector('.form-done');
@@ -94,6 +100,7 @@
       });
       if (firstBad) { firstBad.focus(); return; }
       form.reset();
+      form.querySelectorAll('select').forEach(function (sel) { sel.classList.add('empty'); });
       form.hidden = true;
       if (done) { done.classList.add('show'); done.focus(); }
     });
