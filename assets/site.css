@@ -486,3 +486,13 @@ form.enq .submit-row small { color: #c8d7e3; }
 .link-arrow .ext-mark { margin-left: -6px; }
 @media (max-width: 980px) { .foot-links { padding-left: 0; border-left: 0; } .office:nth-child(2n) { margin-right: 0; padding-right: 0; } }
 @media (max-width: 600px) { .office { margin-right: 0; padding-right: 0; } }
+
+/* Accreditation badges (footer, every page) */
+.badges { list-style: none; margin: 0; padding: 24px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 48px; border-bottom: 1px solid var(--rule); }
+.badges li { display: flex; align-items: center; }
+.badges .sra { width: 180px; }
+.badges .sra > div { width: 100%; }
+.badges .qba { width: auto; height: 84px; }
+.badges .trinity { width: auto; height: 64px; }
+@media (max-width: 600px) { .badges { gap: 20px 28px; } .badges .qba { height: 72px; } .badges .trinity { height: 54px; } }
+@media (max-width: 1180px) { .foot-links { padding-left: 0; border-left: 0; } }
