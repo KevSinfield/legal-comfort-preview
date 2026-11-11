@@ -572,3 +572,75 @@ html { -webkit-tap-highlight-color: rgba(45,108,163,.15); }
 .crumbs ol { align-items: center; row-gap: 0; }
 .crumbs li { display: inline-flex; align-items: center; }
 @media (max-width: 1180px) { .crumbs li > span { display: inline-flex; align-items: center; min-height: 44px; } }
+
+/* ===== v15: "What do you need help with?" chooser ===== */
+.chooser { margin-top: 4px; font-family: var(--sans); }
+.chooser-q { font: 600 11.5px/1.2 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--navy); margin: 0 0 14px; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--rule); background: var(--paper); color: var(--navy); font: 500 15px/1.2 var(--sans); text-decoration: none; transition: background .2s, border-color .2s, color .2s, transform .2s; }
+.chip:hover { border-color: var(--sky); color: var(--sky-deep); transform: translateY(-1px); }
+.chip[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+.chip-alt { background: transparent; border-style: dashed; }
+.picks { margin-top: 18px; }
+.pick { background: var(--paper); border-left: 3px solid var(--sky); padding: 20px 22px 16px; }
+.pick:not([hidden]) { animation: pickIn .35s ease-out both; }
+.pick-t { font: 400 24px/1.2 var(--serif); color: var(--navy); margin: 0 0 6px; }
+.pick-d { font: 400 16px/1.5 var(--serif); color: var(--ink-2); margin: 0 0 14px; }
+.pick-go { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 24px; }
+.pick-go .btn { margin-right: 4px; }
+.pick-wa svg { color: #1f8f4e; }
+@keyframes pickIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (max-width: 600px) {
+  .chips { gap: 8px; }
+  .chip { padding: 10px 14px; font-size: 15px; }
+  .pick { padding: 18px 16px 12px; }
+  .pick-go { flex-direction: column; align-items: stretch; gap: 2px; }
+  .pick-go .btn { justify-content: space-between; margin: 0 0 6px; }
+}
+
+/* ===== v15: motion (all of it is skipped when the phone/computer asks for reduced motion) ===== */
+/* Hero entrance */
+.anim .hero .copy .eyebrow, .anim .hero h1 .ln, .anim .hero .lede, .anim .chooser { opacity: 0; transform: translateY(18px); animation: rise .8s cubic-bezier(.2,.7,.2,1) forwards; }
+.anim .hero h1 .ln { display: inline-block; }
+.anim .hero .copy .eyebrow { animation-delay: .05s; }
+.anim .hero h1 .ln:nth-of-type(1) { animation-delay: .15s; }
+.anim .hero h1 .ln:nth-of-type(2) { animation-delay: .28s; }
+.anim .hero h1 .ln:nth-of-type(3) { animation-delay: .41s; }
+.anim .hero .lede { animation-delay: .6s; }
+.anim .chooser { animation-delay: .75s; }
+.anim .hero-media .stripe { transform-origin: top; transform: scaleY(0); animation: drawDown 1.1s .3s cubic-bezier(.2,.7,.2,1) forwards; }
+.anim .hero-media .caption-tag { opacity: 0; animation: fadeIn .8s 1s forwards; }
+.hero-photo { position: relative; height: 100%; overflow: hidden; }
+.anim .hero-media img { animation: drift 14s ease-out forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes drawDown { to { transform: scaleY(1); } }
+@keyframes drift { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+/* Scroll reveals */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .1s; } .reveal.d2 { transition-delay: .2s; } .reveal.d3 { transition-delay: .3s; }
+
+/* Service rows: number lights up, title nudges across */
+.svc .n, .svc .t { transition: color .25s, transform .3s cubic-bezier(.2,.7,.2,1); }
+a.svc:hover .n, a.svc:focus-visible .n { color: var(--sky); }
+a.svc:hover .t, a.svc:focus-visible .t { transform: translateX(6px); }
+a.svc:active { background-size: 100% 100%; }
+
+/* Photo treatment: one consistent, slightly cool and calm tone across the stock photos */
+.hero-media img, .split-img { filter: saturate(.78) contrast(1.04) brightness(.99); }
+.hero-photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(160deg, rgba(14,42,63,0) 40%, rgba(14,42,63,.22)); }
+.hero-media .caption-tag, .hero-media .stripe { z-index: 1; }
+
+/* Form success tick */
+.form-done .tick { display: block; color: var(--sky-soft); margin-bottom: 16px; }
+.form-done.show .tick circle { stroke-dasharray: 164; stroke-dashoffset: 164; animation: dash .7s ease-out forwards; }
+.form-done.show .tick path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: dash .4s .55s ease-out forwards; }
+@keyframes dash { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  .form-done .tick circle, .form-done .tick path { stroke-dashoffset: 0 !important; }
+}

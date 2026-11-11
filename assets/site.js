@@ -1,5 +1,27 @@
 // Legal Comfort design preview — shared behaviour. No data leaves the page.
 (function () {
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero entrance (homepage). Skipped for reduced motion.
+  if (!calm && document.querySelector('.hero') && window.scrollY < 40) document.documentElement.classList.add('anim');
+
+  // Gentle scroll reveals. Only for content below the fold at load, so nothing visible flickers.
+  if (!calm && 'IntersectionObserver' in window) {
+    var sel = ['.band .wrap', '.sect-head', '.directory .col', '.dir-foot', '.split .panel', '.sect-title',
+      '.steps .step', '.offices .office', '.enquire .grid > *', '.page-hero .wrap > *', '.prose > *', '.related'];
+    var vh = window.innerHeight, rev = [];
+    document.querySelectorAll(sel.join(',')).forEach(function (el) {
+      if (el.getBoundingClientRect().top < vh * 0.92) return;
+      var sibs = el.parentElement ? Array.prototype.filter.call(el.parentElement.children, function (c) { return c.matches(sel.join(',')); }) : [];
+      var i = sibs.indexOf(el); el.classList.add('reveal'); if (i > 0 && i < 4) el.classList.add('d' + i);
+      rev.push(el);
+    });
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); ro.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    rev.forEach(function (el) { ro.observe(el); });
+  }
+
   // Header border on scroll
   var header = document.querySelector('.site-header');
   var onScroll = function () { header && header.classList.toggle('scrolled', window.scrollY > 8); };
@@ -124,6 +146,39 @@
     if (!url || typeof qrcode !== 'function') return;
     var qr = qrcode(0, 'M'); qr.addData(url); qr.make();
     box.querySelector('.qr-box').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+  });
+
+  // "What do you need help with?" chooser: tap an area to see the next step.
+  var chips = document.querySelectorAll('.chip[data-pick]');
+  chips.forEach(function (c) {
+    c.setAttribute('role', 'button'); c.setAttribute('aria-pressed', 'false');
+    c.addEventListener('click', function (e) {
+      e.preventDefault();
+      var on = c.getAttribute('aria-pressed') !== 'true';
+      chips.forEach(function (o) { o.setAttribute('aria-pressed', 'false'); });
+      document.querySelectorAll('.pick').forEach(function (p) { p.hidden = true; });
+      if (on) {
+        c.setAttribute('aria-pressed', 'true');
+        var panel = document.getElementById(c.getAttribute('data-pick'));
+        if (panel) {
+          panel.hidden = false;
+          var r = panel.getBoundingClientRect();
+          if (r.bottom > window.innerHeight - 80) window.scrollBy({ top: r.bottom - window.innerHeight + 100, behavior: calm ? 'auto' : 'smooth' });
+        }
+      }
+    });
+    c.addEventListener('keydown', function (e) { if (e.key === ' ') { e.preventDefault(); c.click(); } });
+  });
+  // "Request a callback" from the chooser: switch the form to callback mode with the area filled in
+  document.querySelectorAll('[data-prefill]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var form = document.querySelector('form.enq'); if (!form) return;
+      var cb = form.querySelector('input[name="mode"][value="callback"]');
+      if (cb) { cb.checked = true; form.applyMode && form.applyMode(); }
+      var area = document.getElementById('f-area');
+      if (area) { area.value = a.getAttribute('data-prefill'); area.classList.toggle('empty', area.value === ''); }
+      setTimeout(function () { var n = document.getElementById('f-name'); n && n.focus({ preventScroll: true }); }, 400);
+    });
   });
 
   // Demo enquiry form: validates locally, never submits anywhere.

@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=14">
+<link rel="stylesheet" href="assets/site.css?v=15">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -32,7 +32,7 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="./" aria-label="Legal Comfort Solicitors, home">
-      <img src="assets/img/legal-comfort-logo.png?v=14" alt="Legal Comfort Solicitors" width="279" height="36">
+      <img src="assets/img/legal-comfort-logo.png?v=15" alt="Legal Comfort Solicitors" width="279" height="36">
     </a>
     <nav class="nav" aria-label="Main">
       <ul class="menu">
@@ -108,16 +108,89 @@
     <div class="wrap grid">
       <div class="copy">
         <p class="eyebrow">Legal Comfort Solicitors</p>
-        <h1 id="hero-h">Clarity when<br>it matters<br><em>most.</em></h1>
+        <h1 id="hero-h"><span class="ln">Clarity when</span><br><span class="ln">it matters</span><br><span class="ln"><em>most.</em></span></h1>
         <p class="lede">We provide legal services and litigation support to individuals and corporate clients.</p>
-        <div class="ctas">
-          <a class="btn btn-primary" href="#contact">Discuss your situation <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="link-arrow" href="#expertise">Explore our expertise <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="chooser">
+          <p class="chooser-q" id="chooser-q">What do you need help with?</p>
+          <ul class="chips" aria-labelledby="chooser-q">
+            <li><a class="chip" href="area-law/civil-litigation/" data-pick="pick-0" aria-controls="pick-0">Civil</a></li>
+            <li><a class="chip" href="area-law/commercial-litigation/" data-pick="pick-1" aria-controls="pick-1">Commercial</a></li>
+            <li><a class="chip" href="area-law/family-litigation/" data-pick="pick-2" aria-controls="pick-2">Family</a></li>
+            <li><a class="chip" href="area-law/employment-litigation/" data-pick="pick-3" aria-controls="pick-3">Employment</a></li>
+            <li><a class="chip" href="area-law/conveyancing/" data-pick="pick-4" aria-controls="pick-4">Conveyancing</a></li>
+            <li><a class="chip" href="area-law/immigration/" data-pick="pick-5" aria-controls="pick-5">Immigration</a></li>
+            <li><a class="chip chip-alt" href="#expertise" data-pick="pick-x" aria-controls="pick-x">Something else</a></li>
+          </ul>
+          <div class="picks" aria-live="polite">
+          <div class="pick" id="pick-0" hidden>
+            <p class="pick-t">Civil Litigation</p>
+            <p class="pick-d">We will engage an experienced and qualified solicitor and barrister to represent you.</p>
+            <div class="pick-go">
+              <a class="btn btn-primary" href="area-law/civil-litigation/">Read about Civil Litigation <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="#enq-form" data-prefill="Civil Litigation">Request a callback <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow pick-wa" href="#whatsapp" data-wa-demo data-wa-text="Hello, I'd like to arrange a call about Civil Litigation."><svg width="18" height="18" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp<span class="vh"> (preview: number to come)</span></a>
+            </div>
+          </div>
+          <div class="pick" id="pick-1" hidden>
+            <p class="pick-t">Commercial Litigation</p>
+            <p class="pick-d">Commercial litigation encompasses a broad spectrum of business disputes.</p>
+            <div class="pick-go">
+              <a class="btn btn-primary" href="area-law/commercial-litigation/">Read about Commercial Litigation <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="#enq-form" data-prefill="Commercial Litigation">Request a callback <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow pick-wa" href="#whatsapp" data-wa-demo data-wa-text="Hello, I'd like to arrange a call about Commercial Litigation."><svg width="18" height="18" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp<span class="vh"> (preview: number to come)</span></a>
+            </div>
+          </div>
+          <div class="pick" id="pick-2" hidden>
+            <p class="pick-t">Family Litigation</p>
+            <p class="pick-d">We will listen to your concerns and provide practical help.</p>
+            <div class="pick-go">
+              <a class="btn btn-primary" href="area-law/family-litigation/">Read about Family Litigation <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="#enq-form" data-prefill="Family Litigation">Request a callback <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow pick-wa" href="#whatsapp" data-wa-demo data-wa-text="Hello, I'd like to arrange a call about Family Litigation."><svg width="18" height="18" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp<span class="vh"> (preview: number to come)</span></a>
+            </div>
+          </div>
+          <div class="pick" id="pick-3" hidden>
+            <p class="pick-t">Employment Litigation</p>
+            <p class="pick-d">Expert advice and litigation support to employees, workers, contractors and employers.</p>
+            <div class="pick-go">
+              <a class="btn btn-primary" href="area-law/employment-litigation/">Read about Employment Litigation <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="#enq-form" data-prefill="Employment Litigation">Request a callback <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow pick-wa" href="#whatsapp" data-wa-demo data-wa-text="Hello, I'd like to arrange a call about Employment Litigation."><svg width="18" height="18" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp<span class="vh"> (preview: number to come)</span></a>
+            </div>
+          </div>
+          <div class="pick" id="pick-4" hidden>
+            <p class="pick-t">Conveyancing</p>
+            <p class="pick-d">Property-related legal matters can often be complex, stressful, and time-consuming.</p>
+            <div class="pick-go">
+              <a class="btn btn-primary" href="area-law/conveyancing/">Read about Conveyancing <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="#enq-form" data-prefill="Conveyancing">Request a callback <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow pick-wa" href="#whatsapp" data-wa-demo data-wa-text="Hello, I'd like to arrange a call about Conveyancing."><svg width="18" height="18" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp<span class="vh"> (preview: number to come)</span></a>
+            </div>
+          </div>
+          <div class="pick" id="pick-5" hidden>
+            <p class="pick-t">Immigration</p>
+            <p class="pick-d">We provide comprehensive legal services to guide you through every step of the process.</p>
+            <div class="pick-go">
+              <a class="btn btn-primary" href="area-law/immigration/">Read about Immigration <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="#enq-form" data-prefill="Immigration">Request a callback <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow pick-wa" href="#whatsapp" data-wa-demo data-wa-text="Hello, I'd like to arrange a call about Immigration."><svg width="18" height="18" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp<span class="vh"> (preview: number to come)</span></a>
+            </div>
+          </div>
+          <div class="pick" id="pick-x" hidden>
+            <p class="pick-t">Not sure which area of law?</p>
+            <p class="pick-d">If you are seeking legal advice then please fill in the form below.</p>
+            <div class="pick-go">
+              <a class="btn btn-primary" href="#contact">Discuss your situation <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="tel:+441206570943">Call 01206 570 943 <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              <a class="link-arrow" href="#expertise">Explore our expertise <svg width="16" height="12" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
       <div class="hero-media">
         <span class="stripe" aria-hidden="true"></span>
-        <img src="assets/img/stock-hero-meeting.jpg?v=14" alt="A solicitor listening to a client across a desk" width="1600" height="900">
+        <div class="hero-photo"><img src="assets/img/stock-hero-meeting.jpg?v=15" alt="A solicitor listening to a client across a desk" width="1600" height="900"></div>
         <p class="caption-tag">Practical guidance. Personal attention.</p>
       </div>
     </div>
@@ -160,7 +233,7 @@
   </section>
 
   <section class="split" id="about" aria-labelledby="about-h">
-    <img class="split-img" src="assets/img/stock-about-meeting.jpg?v=14" alt="" width="1400" height="933" loading="lazy">
+    <img class="split-img" src="assets/img/stock-about-meeting.jpg?v=15" alt="" width="1400" height="933" loading="lazy">
     <div class="panel">
       <p class="eyebrow"><span class="num">03</span><span class="line"></span>About Legal Comfort</p>
       <h2 id="about-h">Your situation is personal.<br>So is our approach.</h2>
@@ -194,7 +267,7 @@
   </section>
 
   <section class="split navy people-split" id="team" aria-labelledby="team-h">
-    <img class="split-img" src="assets/img/stock-people-office.jpg?v=14" alt="" width="1600" height="1067" loading="lazy">
+    <img class="split-img" src="assets/img/stock-people-office.jpg?v=15" alt="" width="1600" height="1067" loading="lazy">
     <div class="panel on-navy">
       <p class="eyebrow"><span class="num">05</span><span class="line"></span></p>
       <h2 id="team-h">People you can<br>talk to.</h2>
@@ -255,7 +328,7 @@
         </div>
       </div>
       <div>
-        <form class="enq" novalidate aria-label="Enquiry form (preview only)">
+        <form class="enq" id="enq-form" novalidate aria-label="Enquiry form (preview only)">
           <fieldset class="mode">
             <legend class="vh">How would you like us to respond?</legend>
             <label><input type="radio" name="mode" value="enquiry" checked><span>Send an enquiry</span></label>
@@ -295,6 +368,7 @@
           <p class="demo-note">Preview only: this form is not connected. Nothing you type is sent or stored.</p>
         </form>
         <div class="form-done" tabindex="-1" role="status">
+          <svg class="tick" width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 29l7 7 15-16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <h3>Preview only</h3>
           <p>On the live site, this is where your request would be sent to the team. In this preview nothing was sent or stored.</p>
           <button class="btn btn-ghost" type="button" style="color:#fff;border-color:#fff">Show the form again</button>
@@ -307,7 +381,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <div class="top">
-      <a class="brand" href="./" aria-label="Legal Comfort Solicitors, home"><img src="assets/img/legal-comfort-logo.png?v=14" alt="Legal Comfort Solicitors" width="200" height="26"></a>
+      <a class="brand" href="./" aria-label="Legal Comfort Solicitors, home"><img src="assets/img/legal-comfort-logo.png?v=15" alt="Legal Comfort Solicitors" width="200" height="26"></a>
       <ul class="foot-links">
         <li><a href="our-team/">Our team</a></li>
         <li><a href="area-law/">Areas of law</a></li>
@@ -323,8 +397,8 @@
         <div style="max-width:180px;max-height:107px;"><div style="position: relative;padding-bottom: 59.1%;height: auto;overflow: hidden;"><iframe title="Solicitors Regulation Authority digital badge" frameborder="0" scrolling="no" allowtransparency="true" src="https://cdn.yoshki.com/iframe/55849r.html" style="border:0px; margin:0px; padding:0px; background-color:transparent; top:0px; left:0px; width:100%; height:100%; position: absolute;"></iframe></div></div>
         <!-- End of SRA Digital Badge code -->
       </li>
-      <li><img src="assets/img/qba-award.webp?v=14" alt="Quality Business Awards" width="250" height="250" loading="lazy" class="qba"></li>
-      <li><img src="assets/img/trinity-selt-member.png?v=14" alt="Trinity College London Secure English Language Tests, member of the Directory of Immigration Advisors" width="777" height="301" loading="lazy" class="trinity"></li>
+      <li><img src="assets/img/qba-award.webp?v=15" alt="Quality Business Awards" width="250" height="250" loading="lazy" class="qba"></li>
+      <li><img src="assets/img/trinity-selt-member.png?v=15" alt="Trinity College London Secure English Language Tests, member of the Directory of Immigration Advisors" width="777" height="301" loading="lazy" class="trinity"></li>
     </ul>
     <div class="reg">
       <p>Legal Comfort Solicitors is the trading name of Legal Comfort Associates Ltd. The company registered in England &amp; Wales as Company No.7797523. We are regulated and authorised by the Solicitors Regulation Authority SRA No.567480.</p>
@@ -339,6 +413,6 @@
 </div>
 <div class="wa-toast" role="status" aria-live="polite"></div>
 
-<script src="assets/site.js?v=14"></script>
+<script src="assets/site.js?v=15"></script>
 </body>
 </html>
