@@ -496,3 +496,38 @@ form.enq .submit-row small { color: #c8d7e3; }
 .badges .trinity { width: auto; height: 64px; }
 @media (max-width: 600px) { .badges { gap: 20px 28px; } .badges .qba { height: 72px; } .badges .trinity { height: 54px; } }
 @media (max-width: 1180px) { .foot-links { padding-left: 0; border-left: 0; } }
+
+/* v12: WhatsApp + callback */
+.enquire .direct .wa-line a { font-size: 20px; }
+.wa-note { margin: 2px 0 0 38px; font: 400 13.5px/1.45 var(--sans); color: #b9cad8; }
+.wa-qr { display: flex; align-items: center; gap: 16px; margin-top: 28px; font: 400 13.5px/1.45 var(--sans); color: #c8d7e3; }
+.wa-qr p { margin: 0; }
+.qr-box { width: 112px; height: 112px; flex: none; background: #fff; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--ink-2); font: 400 10.5px/1.3 var(--sans); padding: 4px; }
+.qr-box svg { width: 100%; height: 100%; display: block; }
+.qr-box:empty::after { content: ""; }
+@media (max-width: 980px), (hover: none) and (pointer: coarse) { .wa-qr { display: none; } }
+.quick .quick-wa { margin-top: 14px; text-align: center; font-size: 14.5px; }
+.quick-wa a { display: inline-flex; align-items: center; gap: 6px; color: var(--navy); min-height: 40px; }
+.quick-wa a:hover { color: var(--sky); }
+
+/* Three-button phone bar */
+@media (max-width: 1180px) {
+  .action-bar { grid-template-columns: 1fr 1fr 1fr; }
+  .action-bar a { font-size: 15px; gap: 8px; }
+  .action-bar a + a { background: var(--navy-2); }
+  .action-bar a:last-child { background: var(--sky); }
+}
+
+/* Enquiry / callback switch */
+form.enq .mode { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,.42); margin: 0 0 6px; padding: 0; min-width: 0; }
+form.enq .mode label { margin: 0; position: relative; cursor: pointer; }
+form.enq .mode input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+form.enq .mode span { display: flex; align-items: center; justify-content: center; min-height: 46px; padding: 8px 10px; font: 500 14.5px/1.2 var(--sans); color: #dce9f4; text-align: center; }
+form.enq .mode label + label span { border-left: 1px solid rgba(255,255,255,.42); }
+form.enq .mode input:checked + span { background: var(--sky-soft); color: var(--navy); }
+form.enq .mode input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: -3px; }
+
+/* WhatsApp preview message */
+.wa-toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px; z-index: 80; max-width: min(520px, calc(100vw - 32px)); background: var(--ink); color: #fff; padding: 14px 18px; font: 400 14px/1.45 var(--sans); box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+@media (max-width: 1180px) { .wa-toast { bottom: calc(76px + env(safe-area-inset-bottom)); } }
+.wa-toast:empty { display: none; }

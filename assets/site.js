@@ -85,6 +85,47 @@
     sel.addEventListener('change', sync); sync();
   });
 
+  // Enquiry / callback switch: changes which fields are required and their labels
+  document.querySelectorAll('form.enq').forEach(function (form) {
+    var radios = form.querySelectorAll('input[name="mode"]');
+    if (!radios.length) return;
+    form.applyMode = function () {
+      var cb = form.querySelector('input[name="mode"]:checked').value === 'callback';
+      var key = cb ? 'callback' : 'enquiry';
+      form.querySelectorAll('[data-enquiry]').forEach(function (el) {
+        var v = el.getAttribute('data-' + key);
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = v; else el.textContent = v;
+      });
+      var req = { 'f-email': !cb, 'f-msg': !cb, 'f-phone': cb, 'f-time': cb };
+      Object.keys(req).forEach(function (id) {
+        var el = document.getElementById(id); if (!el) return;
+        el.required = req[id];
+        if (!req[id]) { el.removeAttribute('aria-invalid'); var e = document.getElementById(el.getAttribute('aria-describedby').split(' ')[0]); e && e.classList.remove('show'); }
+      });
+      form.querySelectorAll('.cb-only').forEach(function (el) { el.hidden = !cb; });
+    };
+    radios.forEach(function (r) { r.addEventListener('change', form.applyMode); });
+    form.applyMode();
+  });
+
+  // WhatsApp: preview mode until the firm's number is set in build.py
+  var toast = document.querySelector('.wa-toast'), toastTimer;
+  document.querySelectorAll('[data-wa-demo]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!toast) return;
+      toast.textContent = 'Preview: the WhatsApp number is to come. On the live site this opens WhatsApp with the message "' + a.getAttribute('data-wa-text') + '"';
+      clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.textContent = ''; }, 6000);
+    });
+  });
+  // Desktop QR code (only rendered once a number is set and the QR library is loaded)
+  document.querySelectorAll('.wa-qr[data-wa-qr]').forEach(function (box) {
+    var url = box.getAttribute('data-wa-qr');
+    if (!url || typeof qrcode !== 'function') return;
+    var qr = qrcode(0, 'M'); qr.addData(url); qr.make();
+    box.querySelector('.qr-box').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+  });
+
   // Demo enquiry form: validates locally, never submits anywhere.
   document.querySelectorAll('form.enq').forEach(function (form) {
     var done = form.parentElement.querySelector('.form-done');
@@ -101,6 +142,7 @@
       if (firstBad) { firstBad.focus(); return; }
       form.reset();
       form.querySelectorAll('select').forEach(function (sel) { sel.classList.add('empty'); });
+      form.applyMode && form.applyMode();
       form.hidden = true;
       if (done) { done.classList.add('show'); done.focus(); }
     });
