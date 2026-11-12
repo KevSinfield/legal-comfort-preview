@@ -25,7 +25,7 @@
     return (h1 ? h1.textContent.trim() : path) + ' page';
   }
   function alertKev(title, msg, tag) {
-    if (mine || location.hostname !== 'kevsinfield.github.io') return;
+    if (!ALERTS || mine || location.hostname !== 'kevsinfield.github.io') return;
     try {
       fetch(ALERTS + '?title=' + encodeURIComponent(title) + '&tags=' + (tag || 'eyes'),
         { method: 'POST', body: msg, keepalive: true, mode: 'cors' }).catch(function () {});
