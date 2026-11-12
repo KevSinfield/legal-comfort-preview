@@ -1,5 +1,44 @@
 // Legal Comfort design preview — shared behaviour. No data leaves the page.
 (function () {
+  // Visit alerts (v16): a short, anonymous note to Kev's phone via ntfy.sh when the
+  // published preview is opened or used. No cookies, no IDs, no form contents, and we
+  // don't log IP addresses. Only runs on the GitHub Pages copy. Visit with ?me once
+  // to stop your own device sending alerts (?me=0 to undo).
+  var ALERTS = 'https://ntfy.sh/lcp-fae8d91e3123';
+  var mine = false;
+  try {
+    var q = new URLSearchParams(location.search);
+    if (q.has('me')) { if (q.get('me') === '0') localStorage.removeItem('lc-me'); else localStorage.setItem('lc-me', '1'); }
+    mine = localStorage.getItem('lc-me') === '1';
+  } catch (e) {}
+  function device() {
+    var u = navigator.userAgent;
+    var d = /iPhone/.test(u) ? 'iPhone' : /iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1) ? 'iPad'
+      : /Android/.test(u) ? 'Android' : /Macintosh/.test(u) ? 'Mac' : /Windows/.test(u) ? 'Windows PC' : 'Other device';
+    var b = /Edg\//.test(u) ? 'Edge' : /CriOS|Chrome\//.test(u) ? 'Chrome' : /FxiOS|Firefox\//.test(u) ? 'Firefox' : /Safari\//.test(u) ? 'Safari' : '';
+    return d + (b ? ' (' + b + ')' : '') + ', ' + screen.width + 'px screen';
+  }
+  function page() {
+    var path = location.pathname.replace(/^\/legal-comfort-preview/, '').replace(/index\.html$/, '') || '/';
+    if (path === '/') return 'Homepage';
+    var h1 = document.querySelector('h1');
+    return (h1 ? h1.textContent.trim() : path) + ' page';
+  }
+  function alertKev(title, msg, tag) {
+    if (mine || location.hostname !== 'kevsinfield.github.io') return;
+    try {
+      fetch(ALERTS + '?title=' + encodeURIComponent(title) + '&tags=' + (tag || 'eyes'),
+        { method: 'POST', body: msg, keepalive: true, mode: 'cors' }).catch(function () {});
+    } catch (e) {}
+  }
+  var ref = '';
+  try { if (document.referrer && new URL(document.referrer).hostname !== location.hostname) ref = ' · came from ' + new URL(document.referrer).hostname; } catch (e) {}
+  alertKev('Preview opened: ' + page(), device() + ref, 'eyes');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (a) alertKev('Tapped to call ' + a.getAttribute('href').replace('tel:', ''), page() + ' · ' + device(), 'telephone_receiver');
+  });
+
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Hero entrance (homepage). Skipped for reduced motion.
@@ -135,6 +174,7 @@
   document.querySelectorAll('[data-wa-demo]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       e.preventDefault();
+      alertKev('Tapped WhatsApp', page() + ' · ' + device(), 'speech_balloon');
       if (!toast) return;
       toast.textContent = 'Preview: the WhatsApp number is to come. On the live site this opens WhatsApp with the message "' + a.getAttribute('data-wa-text') + '"';
       clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.textContent = ''; }, 6000);
@@ -159,6 +199,7 @@
       document.querySelectorAll('.pick').forEach(function (p) { p.hidden = true; });
       if (on) {
         c.setAttribute('aria-pressed', 'true');
+        alertKev('Chooser: tapped ' + c.textContent.trim(), device(), 'point_up');
         var panel = document.getElementById(c.getAttribute('data-pick'));
         if (panel) {
           panel.hidden = false;
@@ -195,6 +236,8 @@
         if (!ok && !firstBad) firstBad = el;
       });
       if (firstBad) { firstBad.focus(); return; }
+      var m = form.querySelector('input[name="mode"]:checked');
+      alertKev('Tried the demo form', (m && m.value === 'callback' ? 'Callback request' : 'Enquiry') + ' · ' + page() + ' · ' + device() + ' (nothing they typed is sent)', 'memo');
       form.reset();
       form.querySelectorAll('select').forEach(function (sel) { sel.classList.add('empty'); });
       form.applyMode && form.applyMode();
